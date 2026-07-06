@@ -50,25 +50,22 @@
 
   .envelope-wrap {
     position: relative;
-    /* Cap by viewport height too, so envelope + emerged card always fit on screen */
     width: min(86vw, 440px, 72vh);
     aspect-ratio: 3 / 2;
     perspective: 1500px;
-    /* Sit slightly below center so the card has room to rise into view above it */
     transform: translateY(32%);
   }
 
   .envelope {
     position: absolute;
     inset: 0;
-    z-index: 1; /* BACK wall of envelope */
+    z-index: 1;
     border-radius: 8px;
     background: linear-gradient(160deg, #e9dcc0 0%, #ddcba6 100%);
     box-shadow: 0 30px 60px -20px rgba(80,60,30,.45), inset 0 0 0 1px rgba(255,255,255,.25);
     overflow: hidden;
   }
 
-  /* FRONT pocket — covers the card initially and hides its lower body */
   .env-pocket {
     position: absolute; inset: 0; z-index: 3;
     clip-path: polygon(0 100%, 50% 42%, 100% 100%);
@@ -81,14 +78,13 @@
   .env-left { clip-path: polygon(0 0, 0 100%, 50% 50%); background: linear-gradient(120deg,#e6d6b4,#dcc99e);}
   .env-right { clip-path: polygon(100% 0,100% 100%,50% 50%); background: linear-gradient(240deg,#e6d6b4,#dcc99e);}
 
-  /* The Invitation Card — MIDDLE layer, sits inside the pocket */
   .card {
     position: absolute;
     left: 6%;
     width: 88%;
     top: 6%;
-    height: 92%;        /* fully contained — bottom at 98%, no leak */
-    z-index: 2;         /* above back (1), below front pocket/flap (3) */
+    height: 92%;
+    z-index: 2;
     background: #fbf7ee;
     border-radius: 6px;
     box-shadow: 0 16px 40px -10px rgba(90,70,35,.4);
@@ -103,10 +99,8 @@
     transform: translateY(0);
     will-change: transform;
   }
-  /* Slides straight up out of the pocket; lands fully visible & centered on screen */
   .card.slide { transform: translateY(-76%); }
 
-  /* FRONT top flap — highest layer, covers card initially */
   .flap {
     position: absolute;
     top: 0; left: 0; right: 0;
@@ -118,10 +112,8 @@
     box-shadow: 0 4px 14px rgba(120,95,50,.25);
     transition: transform 0.9s cubic-bezier(0.25, 1, 0.5, 1), z-index 0s linear 0.9s;
   }
-  /* Rotates open upward from the top anchor, then drops behind the card */
   .flap.open { transform: rotateX(180deg); z-index: 0; }
 
-  /* Wax seal / button */
   .seal {
     position: absolute;
     left: 50%; top: 50%;
@@ -203,25 +195,21 @@
 
   /* ===== MOBILE RESPONSIVENESS ===== */
   @media (max-width: 768px) {
-    /* Scale the envelope down and sit it lower so the card has room to rise */
     .envelope-wrap {
       width: min(80vw, 330px);
-      aspect-ratio: 3 / 2.15;   /* slightly taller pocket -> taller card */
+      aspect-ratio: 3 / 2.15;
       transform: translateY(16%);
     }
-    /* Make the white card a proper, breathable container with the three blocks
-        evenly distributed top -> middle -> bottom, date safely inside */
     .card {
       top: 3%;
-      height: 94%;              /* stays within the envelope -> no leak */
+      height: 94%;
       padding: 9% 8% 9%;
       justify-content: space-between;
     }
-    .card > p:first-child { font-size: 10px; letter-spacing: 3px; }   /* THE WEDDING OF */
+    .card > p:first-child { font-size: 10px; letter-spacing: 3px; }
     .card h2 { font-size: 1.85rem; line-height: 1.05; margin-top: .2rem; }
     .card h2 span { font-size: 1.05rem; }
-    .card > p:last-child { font-size: 12px; margin-top: 0; padding-bottom: 2px; } /* date */
-    /* Slide up so the whole card (incl. date) clears the front flap */
+    .card > p:last-child { font-size: 12px; margin-top: 0; padding-bottom: 2px; }
     .card.slide { transform: translateY(-96%); }
   }
 
@@ -233,6 +221,10 @@
 </style>
 </head>
 <body class="locked font-cormorant">
+
+  <audio id="bg-music" loop preload="auto">
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-17.mp3" type="audio/mpeg">
+  </audio>
 
   <section class="stage" id="envelopeStage">
     <div class="envelope-wrap" id="envelopeWrap">
@@ -318,18 +310,21 @@
       </div>
 
       <div class="reveal d4 mt-14">
-        <a href="https://www.google.com/maps/place/Waldorf+Astoria+Cairo+Heliopolis/@30.1074441,31.3661341,17z/data=!3m1!4b1!4m9!3m8!1s0x1458173311a76d07:0x97ae61b71a937a6f!5m2!4m1!1i2!8m2!3d30.1074441!4d31.3661341!16s%2Fg%2F11kqdstb07?hl=en&entry=ttu&g_ep=EgoyMDI2MDYyOS4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener" class="btn-gold inline-block">
+        <a href="https://www.google.com/maps/place/Waldorf+Astoria+Cairo+Heliopolis/" target="_blank" rel="noopener" class="btn-gold inline-block">
           View Location on Maps
         </a>
       </div>
 
-      <div class="reveal d2 mt-20 max-w-sm mx-auto px-4">
-        <div class="bg-[#fbf7ee] p-4 rounded-sm shadow-[0_16px_35px_rgba(80,60,30,0.15)] border border-gold/30 relative">
-          <div class="border border-gold/20 p-1">
-            <img src="WhatsApp Image 2026-07-04 at 3.17.35 PM.png" alt="Sherif & Basant" class="w-full h-auto grayscale object-cover rounded-2xs" />
+      <div class="reveal d2 mt-24 max-w-[340px] md:max-w-[380px] mx-auto px-4">
+        <div class="bg-[#fbf8ee] p-5 rounded-[2px] shadow-[0_20px_50px_rgba(58,48,38,0.12)] border border-gold/20 relative">
+          <div class="border border-gold/30 p-1.5 relative">
+            <div class="border border-gold/10 p-0.5 bg-[#fcf9f2]">
+              <img src="WhatsApp Image 2026-07-04 at 3.17.35 PM.png" alt="Sherif & Basant" class="w-full h-auto grayscale contrast-[1.05] brightness-[0.98] object-cover rounded-[1px] block" />
+            </div>
           </div>
         </div>
       </div>
+
       <div class="reveal d4 mt-16 divider"></div>
       <p class="reveal d4 font-script text-bronze text-4xl mt-6">With love,</p>
       <p class="reveal d4 font-cinzel text-gold tracking-[5px] text-sm mt-2">SHERIF & BASANT</p>
@@ -342,25 +337,29 @@
   const card = document.getElementById('card');
   const openHint = document.getElementById('openHint');
   const scrollCue = document.getElementById('scrollCue');
+  const bgMusic = document.getElementById('bg-music');
   let opened = false;
 
   function openInvitation() {
     if (opened) return;
     opened = true;
 
+    // تشغيل ملف الـ mp3 الموسيقي فوراً وبشكل مضمون عند فتح الختم
+    if (bgMusic) {
+      bgMusic.play().catch(error => {
+        console.log("Autoplay was prevented, but triggered via click successfully.");
+      });
+    }
+
     seal.classList.add('hide');
     openHint.style.opacity = '0';
-
-    // Step 1: Flap rotates open upward (0.9s)
     flap.classList.add('open');
 
-    // Step 2: ONLY after the flap is fully open, the card slides up (1.6s)
     setTimeout(() => card.classList.add('slide'), 950);
 
-    // Step 3: Unlock scrolling once the card has fully emerged (0.95s + 1.6s)
     setTimeout(() => {
       document.body.classList.remove('locked');
-      document.body.style.overflowY = 'auto';   // enable smooth vertical scroll
+      document.body.style.overflowY = 'auto';
       document.body.style.height = 'auto';
       scrollCue.classList.add('show');
     }, 2600);
@@ -368,38 +367,25 @@
 
   seal.addEventListener('click', openInvitation);
 
-  // Scroll reveal
   const io = new IntersectionObserver((entries) => {
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
   }, { threshold: 0.18 });
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
-  // Hide scroll cue once user scrolls
   window.addEventListener('scroll', () => {
     if (window.scrollY > 120) scrollCue.style.opacity = '0';
   }, { passive: true });
 
-  // ===== كود الـ JavaScript الخاص بالعداد التنازلي =====
+  // ===== العداد التنازلي =====
   const targetDate = new Date("July 22, 2026 00:00:00").getTime();
-
   const countdownInterval = setInterval(() => {
     const now = new Date().getTime();
     const difference = targetDate - now;
-
-    if (difference <= 0) {
-      clearInterval(countdownInterval);
-      document.getElementById("days").innerText = "00";
-      document.getElementById("hours").innerText = "00";
-      document.getElementById("minutes").innerText = "00";
-      document.getElementById("seconds").innerText = "00";
-      return;
-    }
-
+    if (difference <= 0) { clearInterval(countdownInterval); return; }
     const days = Math.floor(difference / (1000 * 60 * 60 * 24));
     const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
     const seconds = Math.floor((difference % (1000 * 60)) / 1000);
-
     document.getElementById("days").innerText = String(days).padStart(2, '0');
     document.getElementById("hours").innerText = String(hours).padStart(2, '0');
     document.getElementById("minutes").innerText = String(minutes).padStart(2, '0');
